@@ -234,3 +234,33 @@ Tuy nhiên, thẻ `<div>` vẫn cực kỳ phù hợp trong một trường hợ
 - Lỗi 8: Dòng 40 - Sử dụng 2 thẻ `<main>` trong 1 trang - Sửa thẻ `<main>` thứ 2 thành thẻ `<aside>`.
 - Lỗi 9: Dòng 5 - Sai charset - sửa thành `<meta charset="UTF-8">`.
 - Lỗi 10: Chưa đóng thẻ `<html>` - Thêm `</html>` sau thẻ `</body>`
+
+### Câu B4:
+**Trang web đã chọn:** thegioididong.com
+
+## 1. Phân tích thẻ Semantic HTML5
+![Ảnh chụp tab Elements cho thẻ Semantic](https://sf-static.upanhlaylink.com/img/image_20260425d81206c0a25029311266abed9b237084.jpg)
+* **3 thẻ semantic HTML5 mà trang sử dụng:**
+  1. Thẻ `<header>`: Nằm ở phần trên cùng của bộ khung HTML (class="header v2024"), bao bọc khu vực logo, thanh tìm kiếm và menu điều hướng chính.
+  2. Thẻ `<footer>`: Nằm ở dưới cùng của mã nguồn (class="footer v2024"), chứa các liên kết hỗ trợ, thông tin công ty và bản quyền.
+  3. Thẻ `<h1>`: Được sử dụng ở thẻ `<h1 class="sc-only">` nhằm mục đích tối ưu hóa SEO (khai báo tiêu đề chính của trang) nhưng được ẩn đi đối với người dùng (screen-reader only).
+
+* **Thẻ dùng KHÔNG đúng semantic:**
+  1. Lạm dụng thẻ `<div>` (Divitis): Trang sử dụng quá nhiều thẻ `<div>` để tạo các hộp thoại, popup (ví dụ: `<div class="locationbox__popup">`) thay vì sử dụng thẻ `<dialog>` chuẩn của HTML5.
+  2. Thẻ `<i>`: Trang web (và nhiều thư viện bên thứ 3 nhúng vào) thường dùng thẻ `<i>` để hiển thị các icon (biểu tượng) thay vì dùng đúng ngữ nghĩa của nó là để in nghiêng văn bản.
+
+## 2. Phân tích thẻ `<table>`
+![Ảnh chụp tab Elements khu vực thông số kỹ thuật](https://sf-static.upanhlaylink.com/img/image_202604250b72c8dcdabbb3d894dab455ff40658c.jpg)
+* **Phát hiện thực tế:** Qua việc sử dụng DevTools inspect phần "Cấu hình & Bộ nhớ", em phát hiện ra trang web Thế Giới Di Động **không sử dụng** thẻ `<table>` truyền thống để hiển thị bảng thông số kỹ thuật.
+* Thay vì dùng `<table>`, `<tr>`, `<td>`, lập trình viên đã sử dụng thẻ danh sách không thứ tự `<ul class="text-specifi">` và các thẻ `<li>` chứa dữ liệu bên trong. Sau đó, họ sử dụng CSS để dàn trang (layout) các thẻ `<li>` này thành dạng lưới (grid) trông giống như một bảng thực thụ.
+* Đây là một kỹ thuật dàn trang rất phổ biến ở các website hiện đại để dễ dàng tùy biến giao diện trên thiết bị di động (Responsive Web Design) hơn so với thẻ table truyền thống.
+
+## 3. Phân tích thẻ `<form>`
+![Ảnh chụp tab Elements cho thẻ Form](https://sf-static.upanhlaylink.com/img/image_20260425c1da88f5d4e00905a667639ebac9c60e.jpg)
+* **Vị trí form:** Bao bọc ô nhập liệu tìm kiếm, nằm bên trong phần header của trang web.
+* **Thuộc tính của form:**
+  * `action="/tim-kiem"`: Khi người dùng tìm kiếm, dữ liệu sẽ được gửi đến đường dẫn `/tim-kiem` để xử lý và trả về kết quả.
+  * `method`: Thẻ form này không khai báo tường minh thuộc tính method. Theo chuẩn HTML, trình duyệt sẽ mặc định hiểu method là `GET`. Ngoài ra, form có sử dụng sự kiện `onsubmit="return suggestSearch(event);"` để xử lý bằng JavaScript trước khi gửi đi.
+* **Input types nào được dùng?**
+  * `<input type="text">`: Được sử dụng làm ô nhập từ khóa tìm kiếm (có `name="key"`).
+  * `<button type="submit">`: Nút bấm để thực thi lệnh gửi form tìm kiếm.
