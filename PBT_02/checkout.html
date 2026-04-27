@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Form</title>
+</head>
+<body>
+    <h1>Trang thanh toán</h1>
+
+    <h2>Giỏ hàng</h2>
+    <table border="1">
+        <tr>
+            <th>STT</th>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Áo thun</td>
+            <td>150.000</td>
+            <td>1</td>
+            <td>150.000</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Quần jean</td>
+            <td>200.000</td>
+            <td>1</td>
+            <td>200.000</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Giày</td>
+            <td>500.000đ</td>
+            <td>2</td>
+            <td>1.000.000đ</td>
+        </tr>
+        <tr>
+            <th colspan="4">Tổng cộng:</th>
+            <th>1.350.000</th>
+        </tr>
+    </table>
+    <h2>Thanh toán</h2>
+    <form>
+        <p>Phương thức thanh toán</p>
+        <label>
+            <input type="radio" name="pay" value="cod">
+            Cod
+        </label>
+        <label>
+            <input type="radio" name="pay" value="bank">
+            Chuyển khoản
+        </label>
+        <label>
+            <input type="radio" name="pay" value="ví điện tử">
+            Ví điện tử
+        </label>
+        <br><br>
+
+        <label>Mã giảm giá:</label>
+        <input type="text" pattern="SALE[0-9]{4}" placeholder="VD: SALE2026">
+
+        <br><br>
+
+        <label>Ghi chú:</label><br>
+        <textarea rows="4" cols="40"></textarea>
+    </form>
+
+    <h2>Giao hàng</h2>
+    <form>
+
+        <label>Ngày giao:</label>
+        <input type="date" required>
+
+        <br><br>
+
+        <label>Khung giờ:</label>
+        <select>
+            <option>Sáng 8-12h</option>
+            <option>Chiều 14-18h</option>
+            <option>Tối 18-21h</option>
+        </select>
+
+        <br><br>
+
+        <label>Số ngày giao:</label>
+        <input type="range" min="1" max="7">
+
+        <br><br>
+
+        <button type="submit" aria-label="Xác nhận đặt hàng">
+            Xác nhận đặt hàng
+        </button>
+
+    </form>
+
+</body>
+</html>
