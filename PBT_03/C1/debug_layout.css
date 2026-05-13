@@ -1,0 +1,44 @@
+/* Container mặc định */
+.container {
+    width: 960px;
+    margin: 0 auto 40px auto; /* Căn giữa và tạo khoảng cách bên dưới */
+    background-color: #f0f0f0; /* Màu nền để dễ nhìn viền container */
+}
+
+/* Clearfix: Dùng để khắc phục lỗi container bị sụp chiều cao khi các thẻ con dùng float */
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Base style cho Sidebar và Content */
+.sidebar, .content {
+    padding: 20px; 
+    border: 1px solid #ccc;
+    float: left;
+    background-color: #d1ecf1;
+}
+
+.content {
+    padding: 30px; /* Content có padding to hơn theo đề bài */
+    background-color: #f8d7da;
+}
+
+/*CÁCH 1: DÙNG BORDER-BOX */
+.fix-1 {
+    box-sizing: border-box;
+}
+
+/* Giữ nguyên Width như đề bài */
+.sidebar.fix-1 { width: 300px; }
+.content.fix-1 { width: 660px; }
+
+/*CÁCH 2: TÍNH TOÁN THỦ CÔNG (CONTENT-BOX)*/
+.fix-2-sidebar {
+    width: 258px; /* 300 - 40 - 2 */
+}
+
+.fix-2-content {
+    width: 598px; /* 660 - 60 - 2 */
+}

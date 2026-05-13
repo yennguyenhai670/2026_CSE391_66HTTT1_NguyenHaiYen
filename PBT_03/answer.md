@@ -154,7 +154,7 @@ Cách tính điểm dựa trên công thức `(ID, Class/Attribute/Pseudo-class,
 - **Giải thích:** Từ khóa `!important` là "kẻ phá luật" trong CSS. Khi một thuộc tính được gắn `!important`, nó sẽ bỏ qua toàn bộ hệ thống tính điểm Specificity (kể cả Inline CSS) và bắt buộc trình duyệt phải áp dụng giá trị đó. Do đó, dù Rule A chỉ là Element Selector yếu ớt, nhờ `!important` nó lại trở thành kẻ chiến thắng.
 
 ## PHẦN B — Thực hành
-### Liệt kê 5 loại Selector đã sử dụng trong file `style.css`:
+### B1:Liệt kê 5 loại Selector đã sử dụng trong file `style.css`:
 
 1. **Universal Selector (Bộ chọn tất cả):**
    - `* { box-sizing: border-box; }`
@@ -179,4 +179,103 @@ Cách tính điểm dựa trên công thức `(ID, Class/Attribute/Pseudo-class,
 6. **Pseudo-class Selector (Bộ chọn trạng thái / giả lớp):**
    - `nav a:hover`, `tr:nth-child(even)`, `tr:hover`
    - *Tác dụng:* Bắt các trạng thái tương tác của người dùng (khi rê chuột vào link, rê chuột vào hàng của bảng) và thực hiện Zebra striping (đổi màu xen kẽ các hàng chẵn).
+
+
+### B3-Specificity Battle
+### 1. Liệt kê 10 rules + Specificity score
+*(Công thức tính: Số ID, Số Class/Thuộc tính, Số Thẻ HTML)*
+
+1. `*`                           → Specificity: **0,0,0** (Màu gray)
+2. `p`                           → Specificity: **0,0,1** (Màu pink)
+3. `.text`                       → Specificity: **0,1,0** (Màu blue)
+4. `p.text`                      → Specificity: **0,1,1** (Màu green)
+5. `.text.highlight`             → Specificity: **0,2,0** (Màu orange)
+6. `p.text.highlight`            → Specificity: **0,2,1** (Màu purple)
+7. `#demo`                       → Specificity: **1,0,0** (Màu red)
+8. `p#demo`                      → Specificity: **1,0,1** (Màu brown)
+9. `#demo.text.highlight`        → Specificity: **1,2,0** (Màu teal)
+10. `p#demo.text.highlight`      → Specificity: **1,2,1** (Màu gold)
+
+### 2. Element cuối cùng hiển thị màu gì? Tại sao?
+- **Kết quả:** Chữ "Hello World" sẽ hiển thị màu **vàng (gold)**.
+- **Tại sao:** Trình duyệt sẽ so sánh điểm số Specificity của tất cả các rules. Bộ chọn số 10 (`p#demo.text.highlight`) có điểm số cao nhất là **1,2,1** (gồm 1 ID `#demo`, 2 class `.text .highlight`, và 1 thẻ `p`). Do đó, nó đánh bại hoàn toàn 9 rules còn lại.
+
+### 3. Screenshot kết quả
+*[Chèn ảnh chụp màn hình trình duyệt hiển thị chữ "Hello World" màu gold tại đây]*
+
+### 4. Thay đổi thứ tự rules trong CSS file. Kết quả có đổi không? Giải thích.
+- **Kết quả:** Khi xáo trộn vị trí của 10 rules này trong file CSS, màu sắc của element **KHÔNG HỀ THAY ĐỔI** (vẫn là màu gold).
+- **Giải thích:** Nguyên tắc **Thác đổ (Cascade - thứ tự ưu tiên từ trên xuống)** chỉ có tác dụng khi hai CSS rules có **ĐIỂM SPECIFICITY BẰNG NHAU HOÀN TOÀN**. Lúc đó rule nào nằm dưới cùng mới "thắng". Tuy nhiên, 10 rules trong bài tập này đều có điểm Specificity **khác biệt nhau**. Theo luật của CSS, Specificity luôn ưu tiên xét trước Cascade. Kẻ có điểm Specificity cao nhất sẽ luôn thắng bất kể nó được đặt ở dòng đầu tiên hay dòng cuối cùng của file CSS.
+
+## PHẦN C — DEBUG & SUY LUẬN 
+### Câu C1 — Debug CSS Layout
+```css
+.container {
+    width: 960px;
+    margin: 0 auto;
+}
+.sidebar {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    float: left;
+}
+.content {
+    width: 660px;
+    padding: 30px;
+    border: 1px solid #ccc;
+    float: left;
+}
+```
+
+1. Chiều rộng **thực tế** của sidebar:342px  và content (content-box!): 722px
+2. Layout bị vỡ vì Container rộng `960px`, sidebar + content phải nằm **cạnh nhau**. Nhưng content bị đẩy xuống dòng mới và Layout bị vỡ tổng kích thước thực tế của hai khối con cộng lại lên tới 1064px (1064px > 960px).
+3. Đưa ra **2 cách sửa** khác nhau (1 cách dùng border-box, 1 cách không dùng)
+
+- Cách 1: Sử dụng box-sizing: border-box (Cách khuyên dùng hiện nay)Khi thêm thuộc tính này, trình duyệt sẽ khóa cứng chiều rộng tổng bằng đúng giá trị width bạn khai báo. Padding và Border sẽ bị ép mọc ngược vào trong thay vì phình ra ngoài.Lúc này tổng chiều rộng sẽ chuẩn xác là: 300 + 660 = 960px(vừa khít container).
+
+- Cách 2: Tính toán trừ hao thủ công (Giữ nguyên content-box)Nếu không dùng border-box, bạn phải tự trừ đi phần padding và border để tìm ra giá trị width (vùng nội dung) sao cho khi cộng thêm viền và lề, nó bằng đúng kích thước ban đầu.
+4. Tạo file `debug_layout.html` + `debug_layout.css` chứng minh cả 2 cách sửa hoạt động -- Ở MỤC C1
+
+
+
+### Câu C2— Cascade Puzzle
+
+Cho CSS file:
+
+```css
+body { font-size: 16px; color: #333; }
+.container { font-size: 14px; }
+.card { color: blue; }
+.card .title { font-size: 20px; }
+.card p { color: inherit; }
+#featured .title { color: red; }
+.highlight { color: green !important; }
+```
+
+Và HTML:
+
+```html
+<body>
+    <div class="container">
+        <div class="card" id="featured">
+            <h2 class="title highlight">Sản phẩm A</h2>
+            <p>Mô tả sản phẩm</p>
+        </div>
+
+        <div class="card">
+            <h2 class="title">Sản phẩm B</h2>
+            <p class="highlight">Mô tả sản phẩm B</p>
+        </div>
+    </div>
+</body>
+```
+
+Trả lời:
+1. "Sản phẩm A" (h2) có `font-size` = 20px và `color` = green
+2. "Mô tả sản phẩm" (p trong card featured) có `color` = blue
+3. "Sản phẩm B" (h2) có `font-size` = 20px và `color` = blue
+4. "Mô tả sản phẩm B" (p.highlight) có `color` = green
+
+
 
