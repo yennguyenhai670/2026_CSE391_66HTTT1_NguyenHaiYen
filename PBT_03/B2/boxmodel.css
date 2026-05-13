@@ -1,0 +1,55 @@
+/* --- PHẦN 1 --- */
+.part1-container {
+    display: flex;
+    gap: 30px; /* Tạo khoảng cách giữa 2 hộp cho dễ nhìn */
+    margin-bottom: 40px;
+}
+
+.box {
+    width: 300px;
+    padding: 20px;
+    border: 5px solid black;
+    background-color: #f8d7da; /* Nền đỏ nhạt để dễ phân biệt */
+}
+
+.box-content {
+    box-sizing: content-box; /* Mặc định của trình duyệt */
+}
+
+.box-border {
+    box-sizing: border-box; /* Bắt buộc padding/border nằm gọn bên trong */
+    background-color: #d1ecf1; /* Nền xanh nhạt */
+}
+
+/* --- PHẦN 2 --- */
+.layout-container {
+    width: 1000px;
+    margin: 0 auto; /* Căn giữa trang */
+    display: flex; /* Dàn hàng ngang */
+    border: 2px dashed red; /* Viền đỏ để thấy rõ ranh giới 1000px */
+}
+
+.col {
+    /*layout sẽ bị vỡ (xuống dòng) ngay lập tức */
+    box-sizing: border-box; 
+    border: 1px solid #999;
+    height: 150px;
+} 
+
+.sidebar {
+    width: 250px;
+    padding: 15px;
+    background-color: #e2e3e5; 
+}
+
+.content {
+    width: 500px;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.ads {
+    width: 250px;
+    padding: 15px;
+    background-color: #e2e2e5; 
+}
