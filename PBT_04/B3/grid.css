@@ -1,0 +1,48 @@
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+
+.layout-wrapper {
+    display: grid;
+    /* Chia 3 cột: Trái 200px, Giữa tự do, Phải 200px */
+    grid-template-columns: 200px minmax(0, 1fr) 200px; 
+    
+    /* Bonus: Dùng grid-template-areas */
+    grid-template-areas: 
+        "header header header"
+        "hero hero hero"
+        "sidebar main ads"
+        "footer footer footer";
+    gap: 20px;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* Định nghĩa các khu vực */
+.header { grid-area: header; background: #34495e; color: white; height: 60px; display: flex; align-items: center; justify-content: center; }
+.hero { grid-area: hero; background: #3498db; color: white; height: 200px; display: flex; align-items: center; justify-content: center;}
+.sidebar { grid-area: sidebar; background: #ecf0f1; padding: 20px; }
+.ads { grid-area: ads; background: #ecf0f1; padding: 20px; }
+.footer { grid-area: footer; background: #2c3e50; color: white; height: 100px; display: flex; align-items: center; justify-content: center;}
+
+/* Layout riêng cho Main Content (Grid lồng Grid) */
+.main-content {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 cột bằng nhau */
+    gap: 15px;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Bonus: Nổi bật card */
+.feature-card {
+    grid-column: span 2; /* Chiếm 2 cột */
+    background: #f1c40f;
+}
